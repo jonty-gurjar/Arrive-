@@ -53,19 +53,6 @@ backend/postman/Arrive Backend.postman_collection.json
 
 Use `http://localhost:5000` as the `baseUrl`.
 
-## GitHub
-
-Create a new GitHub repository, then push this project:
-
-```bash
-git init
-git add .
-git commit -m "Initial full-stack Arrive app"
-git branch -M main
-git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPOSITORY.git
-git push -u origin main
-```
-
 Do not commit local `.env` files. Use `.env.example` files as templates.
 
 ## Vercel Frontend
