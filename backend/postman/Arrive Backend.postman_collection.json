@@ -1,0 +1,145 @@
+{
+  "info": {
+    "name": "Arrive Backend",
+    "description": "Postman collection for the Arrive Node.js and MongoDB API.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5000"
+    },
+    {
+      "key": "bookingId",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/health"
+      }
+    },
+    {
+      "name": "Get Packages",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/packages"
+      }
+    },
+    {
+      "name": "Search Packages",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{baseUrl}}/api/packages?q=goa&packageType=Family&flight=With%20Flight&theme=Beach&sortBy=price-low-to-high",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "packages"],
+          "query": [
+            {
+              "key": "q",
+              "value": "goa"
+            },
+            {
+              "key": "packageType",
+              "value": "Family"
+            },
+            {
+              "key": "flight",
+              "value": "With Flight"
+            },
+            {
+              "key": "theme",
+              "value": "Beach"
+            },
+            {
+              "key": "sortBy",
+              "value": "price-low-to-high"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Signup",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Alex Morgan\",\n  \"email\": \"alex@example.com\",\n  \"password\": \"secret123\"\n}"
+        },
+        "url": "{{baseUrl}}/api/auth/signup"
+      }
+    },
+    {
+      "name": "Login",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"alex@example.com\",\n  \"password\": \"secret123\"\n}"
+        },
+        "url": "{{baseUrl}}/api/auth/login"
+      }
+    },
+    {
+      "name": "Create Booking",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const json = pm.response.json();",
+              "if (json.booking && json.booking.id) {",
+              "  pm.collectionVariables.set('bookingId', json.booking.id);",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"packageId\": \"beach-escape-bali\",\n  \"location\": \"Bali, Indonesia\",\n  \"date\": \"2026-08-15\",\n  \"guests\": \"2 People\",\n  \"name\": \"Alex Morgan\",\n  \"email\": \"alex@example.com\",\n  \"notes\": \"Airport pickup requested\"\n}"
+        },
+        "url": "{{baseUrl}}/api/bookings"
+      }
+    },
+    {
+      "name": "Get Bookings",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/bookings"
+      }
+    },
+    {
+      "name": "Get Booking By ID",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/bookings/{{bookingId}}"
+      }
+    }
+  ]
+}
